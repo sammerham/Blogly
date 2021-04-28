@@ -1,6 +1,5 @@
 """Models for Blogly."""
 from flask_sqlalchemy import SQLAlchemy
-
 db = SQLAlchemy()
 
 
