@@ -75,7 +75,6 @@ def process_edit_user(user_id):
     image_url = request.form['image_url']
 
     user = User(first_name=first_name, last_name=last_name, image_url=image_url)
-    #db.session.add(user)
 
     user = User.query.get_or_404(user_id)
     if first_name:
@@ -86,4 +85,3 @@ def process_edit_user(user_id):
         user.image_url = image_url
     db.session.commit()
     return render_template("user_details.html", user=user)
-# a if condition else b

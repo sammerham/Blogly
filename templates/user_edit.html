@@ -6,19 +6,17 @@
 {% block content %}
 <h1>Edit User</h1>
 <form action="" method="POST">
-    <label for="first_name">First Name</label>
-    <br>
-    <input type="text" name="first_name" id="" placeholder="Enter a first name">
-    <br>
-	<br>
+   <div><label for="first_name">First Name</label></div>
+    <div><input type="text" name="first_name" value="{{ user.first_name }}"></div>
+
     <label for="last_name">Last Name</label>
     <br>
-    <input type="text" name="last_name" id="" placeholder="Enter a last name">
+    <input type="text" name="last_name" value="{{ user.last_name }}">
     <br>
 	<br>
     <label for="image_url">Image URL</label>
     <br>
-    <input type="url" name="image_url" id="" placeholder="Provide an image of this user">
+    <input type="url" name="image_url" value="{{ user.image_url }}">
     <br>
     <br>
     <a href="/users/{{ user.id }}"class="btn btn-outline-info">Cancel</a>
