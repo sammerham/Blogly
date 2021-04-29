@@ -39,7 +39,7 @@ def show_add_user_form():
 
 @app.route("/users/new", methods=["POST"])
 def process_add_form():
-    """Process add form for new users"""
+    """Process form data and create new users"""
 
     first_name = request.form['first_name']
     last_name = request.form['last_name']
@@ -49,7 +49,7 @@ def process_add_form():
                 last_name=last_name, image_url=image_url)
     db.session.add(user)
     db.session.commit()
-
+# To do add a flash msg
     return redirect("/users")
 
 
@@ -62,7 +62,7 @@ def show_user(user_id):
 
 
 @app.route("/users/<int:user_id>/edit")
-def show_edit_form(user_id):
+def show_user_edit_form(user_id):
     """Show user edit form."""
 
     user = User.query.get_or_404(user_id)
@@ -72,16 +72,16 @@ def show_edit_form(user_id):
 @app.route("/users/<int:user_id>/edit", methods=["POST"])
 def process_edit_user(user_id):
     """process user edit form."""
-
+    user = User.query.get_or_404(user_id)
     first_name = request.form['first_name']
     last_name = request.form['last_name']
     image_url = request.form['image_url']
-
-    user = User.query.get_or_404(user_id)
+    
     user.first_name = first_name
     user.last_name = last_name
     user.image_url = image_url
     db.session.commit()
+
     return render_template("user_details.html", user=user)
 
 
@@ -92,4 +92,5 @@ def delete_user(user_id):
     user = User.query.get_or_404(user_id)
     db.session.delete(user)
     db.session.commit()
+
     return redirect("/users")
