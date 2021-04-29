@@ -1,0 +1,15 @@
+{% extends 'base.html' %}
+
+{% block title %} {{ user.first_name + " " + user.last_name + ": Details" }}
+{% endblock %}
+
+{% block content %}
+<img src="{{ user.image_url }}" width="100" alt="user's profile photo">
+<div class="d-inline-block">
+	<h1 >{{ user.first_name + " " + user.last_name }}</h1>
+
+	<a href="/users/{{ user.id }}/edit"class="btn btn-primary">Edit</a>
+	<a href="/users/{{ user.id }}/delete"class="btn btn-danger">Delete</a>
+</div>
+
+	{% endblock %}
