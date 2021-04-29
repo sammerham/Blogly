@@ -82,7 +82,7 @@ def process_edit_user(user_id):
     user.first_name = first_name
     user.last_name = last_name
     user.image_url = image_url
-
+    db.session.add(user)
     db.session.commit()
     return render_template("user_details.html", user=user)
 
