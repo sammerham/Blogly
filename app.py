@@ -14,7 +14,7 @@ connect_db(app)
 
 
 app.config['SECRET_KEY'] = "SECRET!"
-# debug = DebugToolbarExtension(app)
+debug = DebugToolbarExtension(app)
 
 
 @app.route("/")
@@ -72,23 +72,23 @@ def show_edit_form(user_id):
 @app.route("/users/<int:user_id>/edit", methods=["POST"])
 def process_edit_user(user_id):
     """process user edit form."""
+
     first_name = request.form['first_name']
     last_name = request.form['last_name']
     image_url = request.form['image_url']
 
-    # user = User(first_name=first_name,
-                # last_name=last_name, image_url=image_url)
-    user = User.query.get_or_404(user_id)  # why are we defining users twice?
+    user = User.query.get_or_404(user_id)
     user.first_name = first_name
     user.last_name = last_name
     user.image_url = image_url
-    db.session.add(user)
     db.session.commit()
     return render_template("user_details.html", user=user)
 
 
 @app.route("/users/<int:user_id>/delete", methods=["POST"])
 def delete_user(user_id):
+    """Delete user from database"""
+
     user = User.query.get_or_404(user_id)
     db.session.delete(user)
     db.session.commit()
