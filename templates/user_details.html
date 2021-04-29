@@ -8,8 +8,12 @@
 <div class="d-inline-block">
 	<h1 >{{ user.first_name + " " + user.last_name }}</h1>
 
+	
+	<form action="/users/{{ user.id }}/delete" method="POST">
+	<!-- <a href="/users/{{ user.id }}/delete"class="btn btn-danger">Delete</a> -->
 	<a href="/users/{{ user.id }}/edit"class="btn btn-primary">Edit</a>
-	<a href="/users/{{ user.id }}/delete"class="btn btn-danger">Delete</a>
+	<button class="btn btn-danger">DELETE</button>
+	</form>
 </div>
 
 	{% endblock %}

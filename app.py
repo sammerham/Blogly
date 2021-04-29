@@ -75,13 +75,17 @@ def process_edit_user(user_id):
     image_url = request.form['image_url']
 
     user = User(first_name=first_name, last_name=last_name, image_url=image_url)
-
-    user = User.query.get_or_404(user_id)
-    if first_name:
-        user.first_name = first_name
-    if last_name:
-        user.last_name = last_name
-    if image_url:
-        user.image_url = image_url
+    user = User.query.get_or_404(user_id)  # why are we defining users twice?
+    user.first_name = first_name
+    user.last_name = last_name
+    user.image_url = image_url
+    
     db.session.commit()
     return render_template("user_details.html", user=user)
+
+@app.route("/users/<int:user_id>/delete", methods=["POST"])
+def delete_user(user_id):
+    user = User.query.get_or_404(user_id)
+    db.session.delete(user)
+    db.session.commit()
+    return redirect("/users")
