@@ -1,7 +1,7 @@
 """Blogly application."""
 
 from flask import Flask, request, redirect, render_template
-from models import db, connect_db, User
+from models import db, connect_db, User, Post
 from flask_debugtoolbar import DebugToolbarExtension
 
 app = Flask(__name__)
@@ -58,7 +58,7 @@ def show_user(user_id):
     """Show info on a single user."""
 
     user = User.query.get_or_404(user_id)
-    return render_template("user_details.html", user=user)
+    return render_template("user_details.html", user=user, posts=user.posts)
 
 
 @app.route("/users/<int:user_id>/edit")
@@ -94,3 +94,30 @@ def delete_user(user_id):
     db.session.commit()
 
     return redirect("/users")
+
+@app.route("/users/<int:user_id>/posts/new")
+def show_new_post_form(user_id):
+    """Show new post form."""
+
+    user = User.query.get_or_404(user_id)
+    return render_template("new_post_form.html", user=user)
+
+
+@app.route("/users/<int:user_id>/posts/new", methods=["POST"])
+def process_new_post_form(user_id):
+    """Process new post form."""
+    user = User.query.get_or_404(user_id)
+    title = request.form['title']
+    content = request.form['content']
+
+    post = Post(title=title, 
+        content=content,
+        user_id = user_id)
+
+    db.session.add(post)
+    db.session.commit()
+  
+# To do add a flash msg
+    return redirect(f"/users/{user_id}")
+
+

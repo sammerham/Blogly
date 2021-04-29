@@ -27,6 +27,8 @@ class User(db.Model):
                      unique=False)
     image_url = db.Column(db.Text, nullable=True)
 
+    posts = db.relationship('Post')
+
 
 class Post(db.Model):
     """Post"""
@@ -45,3 +47,5 @@ class Post(db.Model):
     created_at = db.Column(db.DateTime, default=datetime.datetime.utcnow,
                     nullable=False)
     user_id = db.Column(db.Integer, db.ForeignKey('users.id'))
+
+    user = db.relationship('User')

@@ -18,9 +18,10 @@
 </div>
 
 <h3>Posts</h3>
+<a href="/users/{{ user.id }}/posts/new" class="btn btn-primary">Add Post</a>
 <ul>
 	{% for post in posts %}
-	<li><a href="{{  }}"></a>{{ post.title }}</li>
+	<li><a href="">{{ post.title }}</a></li>
+	{% endfor %}
 </ul>
-
 {% endblock %}
