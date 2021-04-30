@@ -20,7 +20,7 @@
 <h3>Posts</h3>
 <a href="/users/{{ user.id }}/posts/new" class="btn btn-primary">Add Post</a>
 <ul>
-	{% for post in posts %}
+	{% for post in user.posts %}
 	<li><a href="/posts/{{ post.id }}">{{ post.title }}</a></li>
 	{% endfor %}
 </ul>

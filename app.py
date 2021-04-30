@@ -83,6 +83,7 @@ def process_edit_user(user_id):
     db.session.commit()
 
     # return render_template("user_details.html", user=user)  // redirect
+    return redirect('user_details')
 
 
 @app.route("/users/<int:user_id>/delete", methods=["POST"])
