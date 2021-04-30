@@ -14,7 +14,7 @@ connect_db(app)
 
 
 app.config['SECRET_KEY'] = "SECRET!"
-debug = DebugToolbarExtension(app)
+# debug = DebugToolbarExtension(app)
 
 
 @app.route("/")

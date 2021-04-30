@@ -12,10 +12,10 @@
     </div>
     <div>
         <label for="content">Content</label>
-        <textarea name="content" id="content" rows="5"></textarea value="{{post.content}}"> 
-    <div>
-        <a href="/posts/{{ post.id }}"class="btn btn-outline-info">Cancel</a>
-        <button class="btn-success" type="submit">Edit</button>
-    </div>
+        <textarea name="content" id="content" rows="5" >{{post.content}}</textarea>
+        <div>
+            <a href="/posts/{{ post.id }}" class="btn btn-outline-info">Cancel</a>
+            <button class="btn-success" type="submit">Edit</button>
+        </div>
 </form>
 {% endblock %}
