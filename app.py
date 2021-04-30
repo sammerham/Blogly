@@ -76,7 +76,7 @@ def process_edit_user(user_id):
     first_name = request.form['first_name']
     last_name = request.form['last_name']
     image_url = request.form['image_url']
-    
+
     user.first_name = first_name
     user.last_name = last_name
     user.image_url = image_url
@@ -110,14 +110,44 @@ def process_new_post_form(user_id):
     title = request.form['title']
     content = request.form['content']
 
-    post = Post(title=title, 
+    post = Post(title=title,
         content=content,
         user_id = user_id)
 
     db.session.add(post)
     db.session.commit()
-  
-# To do add a flash msg
+
     return redirect(f"/users/{user_id}")
 
 
+@app.route("/posts/<int:post_id>")
+def show_post(post_id):
+    """Show a post"""
+    #user = User.query.get_or_404(user_id)
+    post = Post.query.get_or_404(post_id)
+
+    return render_template("show_post.html", post=post)
+
+
+@app.route("/posts/<int:post_id>/edit")
+def show_post_edit_form(user_id):
+    """Show post edit form."""
+
+    user = User.query.get_or_404(user_id)
+    return render_template("user_edit.html", user=user)
+
+
+@app.route("/users/<int:user_id>/edit", methods=["POST"])
+def process_edit_user(user_id):
+    """process user edit form."""
+    user = User.query.get_or_404(user_id)
+    first_name = request.form['first_name']
+    last_name = request.form['last_name']
+    image_url = request.form['image_url']
+
+    user.first_name = first_name
+    user.last_name = last_name
+    user.image_url = image_url
+    db.session.commit()
+
+    return render_template("user_details.html", user=user)

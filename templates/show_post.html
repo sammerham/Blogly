@@ -1,0 +1,24 @@
+{% extends 'base.html' %}
+
+{% block title %} Post by: {{ post.user.first_name + " " + post.user.last_name }}
+{% endblock %}
+
+{% block content %}
+<!-- user_details for testing only -->
+<!-- edit user for testing only -->
+<h1>{{ post.title }}</h1>
+
+<p>{{ post.content }}</p>
+
+<p><i>By {{ post.user.first_name + " " + post.user.last_name }}</i></p>
+<p>posted at: {{ post.created_at }}</p>
+
+<a href="/users/{{ post.user.id }}" class="btn btn-outline-info">Cancel</a>
+<a href="/post/{{ post.id }}/edit" class="btn btn-primary">Edit</a>
+<form action="/posts/{{ post.id }}/delete" method="POST">
+
+	<button type="submit" class="btn btn-danger">DELETE</button>
+</form>
+
+
+{% endblock %}

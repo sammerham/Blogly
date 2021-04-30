@@ -1,5 +1,5 @@
 """Models for Blogly."""
-from flask_sqlalchemy import SQLAlchemy #, DateTime
+from flask_sqlalchemy import SQLAlchemy
 import datetime
 db = SQLAlchemy()
 
