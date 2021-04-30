@@ -58,7 +58,7 @@ def show_user(user_id):
     """Show info on a single user."""
 
     user = User.query.get_or_404(user_id)
-    return render_template("user_details.html", user=user, posts=user.posts)
+    return render_template("user_details.html", user=user)
 
 
 @app.route("/users/<int:user_id>/edit")
@@ -82,7 +82,7 @@ def process_edit_user(user_id):
     user.image_url = image_url
     db.session.commit()
 
-    return render_template("user_details.html", user=user)
+    # return render_template("user_details.html", user=user)  // redirect
 
 
 @app.route("/users/<int:user_id>/delete", methods=["POST"])
@@ -106,7 +106,6 @@ def show_new_post_form(user_id):
 @app.route("/users/<int:user_id>/posts/new", methods=["POST"])
 def process_new_post_form(user_id):
     """Process new post form."""
-    user = User.query.get_or_404(user_id)
     title = request.form['title']
     content = request.form['content']
 
@@ -123,31 +122,41 @@ def process_new_post_form(user_id):
 @app.route("/posts/<int:post_id>")
 def show_post(post_id):
     """Show a post"""
-    #user = User.query.get_or_404(user_id)
     post = Post.query.get_or_404(post_id)
 
     return render_template("show_post.html", post=post)
 
 
 @app.route("/posts/<int:post_id>/edit")
-def show_post_edit_form(user_id):
+def show_post_edit_form(post_id):
     """Show post edit form."""
 
-    user = User.query.get_or_404(user_id)
-    return render_template("user_edit.html", user=user)
+    post = Post.query.get_or_404(post_id)
+
+    return render_template("post_edit.html", post=post)
 
 
-@app.route("/users/<int:user_id>/edit", methods=["POST"])
-def process_edit_user(user_id):
-    """process user edit form."""
-    user = User.query.get_or_404(user_id)
-    first_name = request.form['first_name']
-    last_name = request.form['last_name']
-    image_url = request.form['image_url']
+@app.route("/posts/<int:post_id>/edit", methods=["POST"])
+def process_edit_post(post_id):
+    """process  edit form for a post."""
+    post = Post.query.get_or_404(post_id)
+    title = request.form['title']
+    content = request.form['content']
+    
+    post.title= title
+    post.content = content
 
-    user.first_name = first_name
-    user.last_name = last_name
-    user.image_url = image_url
     db.session.commit()
 
-    return render_template("user_details.html", user=user)
+    return redirect(f"/posts/{post_id}")
+
+
+@app.route("/posts/<int:post_id>/delete", methods=["POST"])
+def delete_post(post_id):
+    """Delete a post from database"""
+
+    post = Post.query.get_or_404(post_id)
+    db.session.delete(post)
+    db.session.commit()
+
+    return redirect(f"/users/{post.user_id}")
